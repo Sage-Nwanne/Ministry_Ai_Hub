@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+*.egg
+
+# logs
+logs/
+
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.*
+
+# Database
+*.sqlite3
+*.db
+
+# Node.js (if applicable)
+node_modules/
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+
+# Migrations (if using Django)
+migrations/
+*/migrations/
+
+# Test output
+*.out
+*.tmp
+
+# System files
+Thumbs.db
+
+# Others
+.idea/
+*.swp

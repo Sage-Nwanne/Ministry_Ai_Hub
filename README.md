@@ -83,7 +83,20 @@ This file contains the project documentation you're reading now.
    cd your-repo
    ```
 
-2. Install the Python dependencies:
+
+2. Set up virtual environment and Install the Python dependencies:
+   ```bash
+
+   Linux/mac
+
+   source venv/bin/activate 
+
+ 
+   Windows(powershell)
+   .\venv\Scripts\Activate
+
+   ```
+   Install the Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
