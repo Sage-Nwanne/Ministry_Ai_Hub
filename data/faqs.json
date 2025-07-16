@@ -1,14 +1,58 @@
 [
-  {
-    "question": "What time does Sunday service start?",
-    "answer": "Sunday service begins at 10:00 AM. Join us in person or online!"
-  },
-  {
-    "question": "How do I give online?",
-    "answer": "You can give securely online by visiting our Giving page or using the Church App."
-  },
-  {
-    "question": "Where is the church located?",
-    "answer": "We're located at 123 Kingdom Way, Atlanta, GA."
-  }
+    {
+        "question": "What time does Sunday service start?",
+        "answer": "Sunday service begins at 10:00 AM. Join us in person or online!"
+    },
+    {
+        "question": "When does church start?",
+        "answer": "Sunday service begins at 10:00 AM. Join us in person or online!"
+    },
+    {
+        "question": "When is service?",
+        "answer": "Sunday service begins at 10:00 AM. Join us in person or online!"
+    },
+    {
+        "question": "How do I give online?",
+        "answer": "You can give securely online by visiting our Giving page or using the Church App."
+    },
+    {
+        "question": "How can I donate?",
+        "answer": "You can give securely online by visiting our Giving page or using the Church App."
+    },
+    {
+        "question": "Where is the church located?",
+        "answer": "We're located at 123 Kingdom Way, Atlanta, GA."
+    },
+    {
+        "question": "What is your address?",
+        "answer": "We're located at 123 Kingdom Way, Atlanta, GA."
+    },
+    {
+        "question": "How can I join the choir?",
+        "answer": "You can join the choir by speaking with our Worship Leader after any Sunday service, or by signing up on our website."
+    },
+    {
+        "question": "Who is the pastor?",
+        "answer": "Our lead pastor is Dr. Myles Williams."
+    },
+    {
+        "question": "How do I contact the church?",
+        "answer": "You can contact us at info@yourchurch.org or call us at (555) 123-4567."
+    },
+    {
+        "question": "What are your office hours?",
+        "answer": "Our office is open Monday through Friday, 9 AM to 5 PM."
+    },
+    {
+        "question": "How do I join a small group?",
+        "answer": "You can join a small group by signing up on our website or speaking with a small group leader after any service."
+    },
+    {
+        "question": "Is there a youth ministry?",
+        "answer": "Yes! Our youth ministry meets every Wednesday at 7 PM in the youth building."
+    },
+    {
+        "question": "How can I get baptized?",
+        "answer": "To get baptized, please sign up at the welcome desk or online. We’ll contact you with the next available date."
+    }
 ]

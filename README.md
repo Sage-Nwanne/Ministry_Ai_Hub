@@ -59,6 +59,82 @@ graph TD
 
 ### Installation
 
+<<<<<<< HEAD
+=======
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo.git
+   cd your-repo
+   ```
+
+
+2. Set up virtual environment and Install the Python dependencies:
+   ```bash
+
+   Linux/mac
+
+   source venv/bin/activate 
+
+ 
+   Windows(powershell)
+   .\venv\Scripts\Activate
+
+   ```
+   Install the Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Set up environment variables:
+   ```bash
+   touch .env
+   ```
+   Add the following variables to the `.env` file:
+   ```
+   REDIS_HOST=localhost
+   REDIS_PORT=6379
+   LM_STUDIO_URL=http://localhost:1234/v1/chat/completions
+   LM_MODEL_NAME=mythomax-13b
+   OPENAI_API_KEY=your_openai_api_key
+   ```
+
+4. Run the application:
+   ```bash
+   python main.py
+   ```
+
+The application should now be running at `http://localhost:8000`.
+
+---
+
+## 📝 API Endpoints
+Swagger UI: http://localhost:8000/docs
+OpenAPI JSON: http://localhost:8000/openapi.json
+
+✅ Example: POST /tone-polish
+Input:
+json
+Always show details
+
+
+{
+  "raw_response": "I don't know if God hears me anymore.",
+  "context": "Person struggling with faith",
+  "scripture": "Psalm 34:17"
+}
+Output:
+json
+Always show details
+
+
+{
+  "polished_response": "Beloved, even in your silence, the Lord hears your cry. As Psalm 34:17 assures us, 'The righteous cry out, and the Lord hears them.'"
+}
+
+---
+## Dependencies
+From requirements.txt
+>>>>>>> 9406dff5e77177d41af7f5a0ea7fae38b3c36a59
 ```bash
 # 1. Clone repository
 git clone https://github.com/Sage-Nwanne/inbound_ministry_agent_system.git

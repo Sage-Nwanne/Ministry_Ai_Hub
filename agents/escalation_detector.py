@@ -16,10 +16,13 @@ ESCALATION_PROMPT = """
 Analyze the following message and determine if it contains sensitive topics that require human intervention.
 Sensitive topics include: suicidal thoughts, severe depression, abuse, violence, self-harm, or urgent medical needs.
 
+DO NOT escalate questions that are routine, general, or informational (such as questions about service times, locations, or general church information). Be conservative—only escalate if you are certain.
+
 Message: {message}
 
 Return only "ESCALATE" if this needs human attention, or "NORMAL" if it can be handled automatically.
 """
+
 
 SCRIPTURE_PROMPT = """
 Based on the following message, suggest an appropriate scripture verse that would provide comfort, guidance, or wisdom.
@@ -58,14 +61,16 @@ def get_random_scripture():
     return f"{verse['reference']} - {verse['text']}"
 
 def detect_escalation(message: str) -> bool:
-    """Detect if a message contains sensitive topics requiring escalation."""
+    """
+    Detect if a message contains sensitive topics requiring escalation.
+    """
     prompt = ESCALATION_PROMPT.format(message=message)
     key = "escalation:" + hashlib.sha256(prompt.encode()).hexdigest()
 
     try:
         cached = redis_client.get(key)
         if cached:
-            return cached.decode("utf-8") == "ESCALATE"
+            return cached.decode("utf-8").strip().upper() == "ESCALATE"
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -73,13 +78,13 @@ def detect_escalation(message: str) -> bool:
             temperature=0.1,
             max_tokens=10
         )
-        result = response["choices"][0]["message"]["content"].strip()
+        result = response["choices"][0]["message"]["content"].strip().upper()
         redis_client.setex(key, 86400, result)
         logger.info(f"Escalation detection for message: {message[:50]}... Result: {result}")
-        return "ESCALATE" in result
+        return result == "ESCALATE"
     except Exception as e:
         logger.error(f"Escalation detection error: {str(e)}")
-        return True  # default to escalate if unsure
+        return False  # Default to NOT escalate if unsure, for demo purposes
 
 def get_scripture_recommendation(message: str) -> str:
     """Get a scripture recommendation based on the message content."""

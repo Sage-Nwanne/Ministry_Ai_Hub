@@ -53,7 +53,7 @@ def initialize_faq_collection():
         return False
 
 # Step 3: Retrieve best-matching answer
-def get_answer(user_question: str, threshold=0.75):
+def get_answer(user_question: str, threshold=0.60):
     try:
         if not initialize_faq_collection():
             logger.warning("FAQ collection not initialized, returning None")
