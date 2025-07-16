@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Community Outreach",
+    "summary": "Served over 300 meals to local families last month thanks to donor support.",
+    "category": "outreach",
+    "impact_metric": "300 meals served",
+    "donation_range": "$1000-$5000"
+  },
+  {
+    "title": "Youth Program Growth", 
+    "summary": "Welcomed 25 new students into discipleship groups this quarter.",
+    "category": "youth",
+    "impact_metric": "25 new students",
+    "donation_range": "$500-$2000"
+  },
+  {
+    "title": "Senior Care Ministry",
+    "summary": "Provided weekly visits and care packages to 40 elderly members.",
+    "category": "seniors",
+    "impact_metric": "40 seniors supported",
+    "donation_range": "$200-$1000"
+  },
+  {
+    "title": "Mission Support",
+    "summary": "Funded 3 missionary families serving in underserved communities.",
+    "category": "missions",
+    "impact_metric": "3 missionary families",
+    "donation_range": "$2000+"
+  }
+]
