@@ -5,7 +5,7 @@ Integrates existing inbound agents with new donation agents
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from agents.api import app as inbound_app, inbound_router
+from agents.api import inbound_router  # Remove 'app as inbound_app' - not used
 from agents.donation_api import donation_router
 from agents.utils import setup_logging, validate_environment
 import uvicorn

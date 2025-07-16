@@ -14,6 +14,10 @@ This system automates ministry response workflows using advanced AI agents that:
 - **Recommend contextual scripture** for spiritual guidance  
 - **Generate pastoral responses** in Dr. Myles' authentic voice
 - **Process FAQ inquiries** with enhanced, personalized answers
+- **🆕 Generate personalized donor thank-you messages**
+- **🆕 Share compelling ministry impact stories**
+- **🆕 Promote recurring giving with biblical stewardship**
+- **🆕 Answer donation and tax-related questions**
 
 **Built for scale** with Redis caching, async processing, and comprehensive monitoring.
 
@@ -23,28 +27,39 @@ This system automates ministry response workflows using advanced AI agents that:
 
 ```mermaid
 graph TD
-    A[Incoming Message] --> B[Escalation Detection Agent]
-    B --> C[Scripture Recommendation Agent]
-    C --> D[FAQ Lookup System]
-    D --> E[Response Polishing Agent]
-    E --> F[Final Pastoral Response]
+    A[Incoming Message] --> B[Ministry Hub Director]
+    B --> C[Inbound Agents]
+    B --> D[Donation Agents]
     
-    G[Redis Cache] --> B
-    G --> C
-    G --> E
+    C --> E[Escalation Detection Agent]
+    C --> F[Scripture Recommendation Agent]
+    C --> G[FAQ Lookup System]
+    C --> H[Response Polishing Agent]
     
-    H[ChromaDB] --> D
-    I[Analytics Logger] --> J[Performance Metrics]
+    D --> I[Thank You Agent]
+    D --> J[Impact Story Agent]
+    D --> K[Recurring Giving Agent]
+    D --> L[Donation Q&A Agent]
+    
+    M[Redis Cache] --> C
+    M --> D
+    N[ChromaDB] --> G
+    O[Analytics Logger] --> P[Performance Metrics]
 ```
 
 ### Core Components
 
 | Component | Purpose | Technology |
 |-----------|---------|------------|
+| **Ministry Hub** | Central director routing requests | FastAPI + Swarms |
 | **Escalation Agent** | Identifies sensitive topics | Swarms + GPT-3.5 |
 | **Scripture Agent** | Contextual verse recommendations | Swarms + GPT-3.5 |
 | **Tone Agent** | Dr. Myles pastoral voice | Swarms + GPT-3.5 |
 | **FAQ System** | Semantic search & enhancement | ChromaDB + Swarms |
+| **🆕 Thank You Agent** | Personalized donor appreciation | Swarms + GPT-3.5 |
+| **🆕 Impact Story Agent** | Ministry achievement narratives | Swarms + GPT-3.5 |
+| **🆕 Recurring Giving Agent** | Stewardship promotion | Swarms + GPT-3.5 |
+| **🆕 Donation Q&A Agent** | Tax and giving questions | Swarms + GPT-3.5 |
 | **Caching Layer** | Performance optimization | Redis |
 | **API Gateway** | RESTful endpoints | FastAPI |
 
@@ -59,82 +74,6 @@ graph TD
 
 ### Installation
 
-<<<<<<< HEAD
-=======
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo.git
-   cd your-repo
-   ```
-
-
-2. Set up virtual environment and Install the Python dependencies:
-   ```bash
-
-   Linux/mac
-
-   source venv/bin/activate 
-
- 
-   Windows(powershell)
-   .\venv\Scripts\Activate
-
-   ```
-   Install the Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Set up environment variables:
-   ```bash
-   touch .env
-   ```
-   Add the following variables to the `.env` file:
-   ```
-   REDIS_HOST=localhost
-   REDIS_PORT=6379
-   LM_STUDIO_URL=http://localhost:1234/v1/chat/completions
-   LM_MODEL_NAME=mythomax-13b
-   OPENAI_API_KEY=your_openai_api_key
-   ```
-
-4. Run the application:
-   ```bash
-   python main.py
-   ```
-
-The application should now be running at `http://localhost:8000`.
-
----
-
-## 📝 API Endpoints
-Swagger UI: http://localhost:8000/docs
-OpenAPI JSON: http://localhost:8000/openapi.json
-
-✅ Example: POST /tone-polish
-Input:
-json
-Always show details
-
-
-{
-  "raw_response": "I don't know if God hears me anymore.",
-  "context": "Person struggling with faith",
-  "scripture": "Psalm 34:17"
-}
-Output:
-json
-Always show details
-
-
-{
-  "polished_response": "Beloved, even in your silence, the Lord hears your cry. As Psalm 34:17 assures us, 'The righteous cry out, and the Lord hears them.'"
-}
-
----
-## Dependencies
-From requirements.txt
->>>>>>> 9406dff5e77177d41af7f5a0ea7fae38b3c36a59
 ```bash
 # 1. Clone repository
 git clone https://github.com/Sage-Nwanne/inbound_ministry_agent_system.git
@@ -150,57 +89,48 @@ cp .env.example .env
 # 4. Start Redis
 redis-server
 
-# 5. Launch application
-python main.py
+# 5. Launch Ministry Hub
+python ministry_hub_main.py
 ```
 
-**API Available at:** `http://localhost:8000`  
+**Ministry Hub Available at:** `http://localhost:8000`  
 **Documentation:** `http://localhost:8000/docs`
-
----
-
-## 🔧 Configuration
-
-### Environment Variables
-
-```env
-# Required
-OPENAI_API_KEY=sk-your-openai-key-here
-
-# Redis Configuration
-REDIS_HOST=localhost
-REDIS_PORT=6379
-REDIS_DB=0
-
-# Optional
-HOST=0.0.0.0
-PORT=8000
-FAQ_DATA_PATH=./data/faqs.json
-```
-
-### Agent Customization
-
-Modify agent behavior in `agents/swarm_agents.py`:
-
-```python
-escalation_agent = Agent(
-    agent_name="EscalationDetector",
-    system_prompt="Your custom escalation detection prompt...",
-    llm=model,
-    max_loops=1,
-    temperature=0.3  # Adjust for consistency
-)
-```
 
 ---
 
 ## 📡 API Reference
 
-### Core Endpoints
+### 🆕 **Ministry Hub Endpoints**
+
+#### Combined Hub Root
+```http
+GET /
+```
+
+**Response:**
+```json
+{
+  "service": "Ministry AI Hub",
+  "version": "1.0.0",
+  "systems": {
+    "inbound": "Message processing, FAQ, escalation detection",
+    "donation": "Thank you messages, impact stories, recurring giving"
+  },
+  "endpoints": {
+    "inbound": "/api/v1/inbound",
+    "donation_thank_you": "/api/v1/donation/thank-you",
+    "donation_impact": "/api/v1/donation/impact-story",
+    "donation_recurring": "/api/v1/donation/recurring-giving",
+    "donation_qa": "/api/v1/donation/question"
+  }
+}
+```
+
+### Inbound Message Endpoints
 
 #### Process Ministry Message
 ```http
-POST /inbound
+POST /api/v1/inbound
 Content-Type: application/json
 
 {
@@ -210,18 +140,9 @@ Content-Type: application/json
 }
 ```
 
-**Response:**
-```json
-{
-  "reply": "Beloved, prayer can feel challenging at times. Remember Matthew 6:9-11...",
-  "needs_escalation": false,
-  "framework": "swarms"
-}
-```
-
 #### FAQ Lookup
 ```http
-POST /faq
+POST /api/v1/faq
 Content-Type: application/json
 
 {
@@ -229,90 +150,121 @@ Content-Type: application/json
 }
 ```
 
-#### Escalation Check
+### 🆕 **Donation Engagement Endpoints**
+
+#### Generate Thank You Message
 ```http
-POST /escalation-check
+POST /api/v1/donation/thank-you
 Content-Type: application/json
 
 {
-  "message": "I'm having thoughts of self-harm"
+  "donor_name": "John Smith",
+  "amount": "$500",
+  "email": "john@example.com"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Dear John, Your generous gift of $500 fills our hearts with gratitude...",
+  "donor_name": "John Smith",
+  "amount": "$500",
+  "response_time_ms": 1250
+}
+```
+
+#### Get Impact Story
+```http
+POST /api/v1/donation/impact-story
+Content-Type: application/json
+
+{
+  "category": "youth",
+  "donor_segment": "major_donor"
+}
+```
+
+#### Promote Recurring Giving
+```http
+POST /api/v1/donation/recurring-giving
+Content-Type: application/json
+
+{
+  "donor_name": "Sarah Johnson",
+  "current_amount": "$100"
+}
+```
+
+#### Answer Donation Questions
+```http
+POST /api/v1/donation/question
+Content-Type: application/json
+
+{
+  "question": "Is my donation tax deductible?",
+  "donor_context": "first_time_donor"
 }
 ```
 
 ### Monitoring Endpoints
 
-- `GET /` - Health check
-- `GET /analytics` - Performance metrics
+- `GET /health` - Comprehensive health check for both systems
+- `GET /api/v1/donation/health` - Donation system health
 - `GET /docs` - Interactive API documentation
 
 ---
 
 ## 🧪 Testing & Development
 
-### Unit Testing
+### Test Donation Agents
 ```bash
-# Test individual agents
+# Test thank you generation
 python -c "
-from agents.swarm_agents import detect_escalation_swarm
-result = detect_escalation_swarm('I need prayer guidance')
-print(f'Escalation needed: {result}')
+from agents.donation_agents import send_thank_you_message
+result = send_thank_you_message('John', '$100')
+print(result)
+"
+
+# Test impact story
+python -c "
+from agents.donation_agents import share_impact_story
+result = share_impact_story('youth')
+print(result)
 "
 ```
 
-### Integration Testing
+### Test Complete Hub
 ```bash
-# Test complete workflow
-python -c "
-from agents.inbound_agent import inbound_agent
-response, faq_matched = inbound_agent('How do I strengthen my faith?')
-print(f'Response: {response[:100]}...')
-print(f'FAQ matched: {faq_matched}')
-"
-```
-
-### Load Testing
-```bash
-# Install testing tools
-pip install httpx pytest
-
-# Run load tests
-python tests/load_test.py
+# Test ministry hub endpoints
+curl -X POST http://localhost:8000/api/v1/donation/thank-you \
+  -H "Content-Type: application/json" \
+  -d '{"donor_name": "Test User", "amount": "$50"}'
 ```
 
 ---
 
 ## 📊 Performance & Monitoring
 
-### Caching Strategy
+### 🆕 **Enhanced Caching Strategy**
 - **Agent responses:** 24-hour TTL
 - **Scripture recommendations:** 24-hour TTL  
 - **FAQ enhancements:** 24-hour TTL
+- **🆕 Impact stories:** 12-hour TTL
+- **🆕 Thank you templates:** 6-hour TTL
 
-### Metrics Tracked
-- Response times per endpoint
-- Escalation rates
-- FAQ match rates
-- Agent performance
-- Error rates
-
-### Logging
-```python
-# Structured logging format
-{
-  "timestamp": "2024-01-15T10:30:00Z",
-  "level": "INFO",
-  "message": "Swarms workflow completed",
-  "user_id": "user123",
-  "response_time_ms": 1250,
-  "escalated": false
-}
-```
+### 🆕 **New Metrics Tracked**
+- Donation engagement rates
+- Thank you message generation times
+- Impact story effectiveness
+- Recurring giving conversion rates
+- Donor question resolution rates
 
 ---
 
 ## 🚢 Deployment
 
-### Docker Deployment
+### 🆕 **Ministry Hub Deployment**
 ```dockerfile
 FROM python:3.9-slim
 
@@ -323,27 +275,34 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 EXPOSE 8000
 
-CMD ["python", "main.py"]
+# Run the combined ministry hub
+CMD ["python", "ministry_hub_main.py"]
 ```
 
 ### Production Checklist
 - [ ] Set `OPENAI_API_KEY` in production environment
 - [ ] Configure Redis persistence and clustering
 - [ ] Set up log aggregation (ELK stack recommended)
-- [ ] Configure monitoring alerts
+- [ ] Configure monitoring alerts for both inbound and donation systems
 - [ ] Set up SSL/TLS termination
 - [ ] Configure rate limiting
-- [ ] Set up backup procedures for FAQ data
+- [ ] Set up backup procedures for FAQ and impact story data
+- [ ] **🆕 Configure donation data backup and security**
+- [ ] **🆕 Set up donor privacy compliance monitoring**
 
 ---
 
-## 🔒 Security Considerations
+## 🆕 **New Data Files**
 
-- **API Key Protection:** Never commit API keys to version control
-- **Input Validation:** All user inputs are sanitized
-- **Rate Limiting:** Implement per-user rate limits in production
-- **Escalation Safety:** System defaults to escalation on errors
-- **Data Privacy:** No sensitive user data stored in logs
+### Impact Stories (`data/impact_stories.json`)
+Contains ministry achievement data for generating compelling donor communications:
+- Community outreach metrics
+- Youth program growth
+- Senior care initiatives  
+- Mission support updates
+
+### Enhanced Verses (`data/verses.json`)
+Extended with giving and stewardship scriptures for donation communications.
 
 ---
 
@@ -360,6 +319,7 @@ CMD ["python", "main.py"]
 - Add unit tests for new features
 - Update documentation for API changes
 - Test with multiple Python versions
+- **🆕 Test both inbound and donation agent functionality**
 
 ---
 
@@ -382,7 +342,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Version:** 2.0.0 | **Framework:** Swarms AI | **Status:** Production Ready
+**Version:** 2.1.0 | **Framework:** Swarms AI | **Status:** Production Ready
 
 *Empowering ministry through intelligent automation while preserving the human touch.*
 
