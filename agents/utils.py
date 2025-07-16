@@ -38,15 +38,21 @@ def get_redis_client():
 
 # Environment validation
 def validate_environment():
+    """Validate required environment variables"""
     required_vars = [
+        "OPENAI_API_KEY",  # Required for Swarms
         "REDIS_HOST",
-        "REDIS_PORT",
-        "LM_STUDIO_URL",
-        "LM_MODEL_NAME",
-        "OPENAI_API_KEY"
+        "REDIS_PORT"
     ]
     
     missing = [var for var in required_vars if not os.getenv(var)]
     
     if missing:
         raise EnvironmentError(f"Missing required environment variables: {', '.join(missing)}")
+    
+    # Validate OpenAI API key format
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key.startswith("sk-"):
+        raise EnvironmentError("OPENAI_API_KEY appears to be invalid (should start with 'sk-')")
+    
+    logger.info("Environment validation passed")

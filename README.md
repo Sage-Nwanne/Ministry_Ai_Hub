@@ -1,217 +1,314 @@
-# Inbound Ministry Agent System
+# Ministry Response System - AI-Powered with Swarms Framework
 
-Hi Swathi,
+> **Professional AI-driven ministry communication system** that provides intelligent, contextual responses to inbound messages while maintaining pastoral care standards.
 
-This is the full setup and documentation for the **Inbound Ministry Agent System** I've been working on. The goal was to create a **scalable, efficient, and locally powered AI system** that can:
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.116.0-green.svg)](https://fastapi.tiangolo.com)
+[![Swarms](https://img.shields.io/badge/Swarms-5.0+-purple.svg)](https://github.com/kyegomez/swarms)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-- ✅ Process inbound user messages
-- ✅ Answer FAQs using vector search (ChromaDB)
-- ✅ Tone-polish replies using a local LLM (like MythoMax) in the voice of “Dr. Myles”
-- ✅ Cache everything with Redis for speed and repeatability
+## 🎯 Overview
+
+This system automates ministry response workflows using advanced AI agents that:
+- **Detect sensitive content** requiring human intervention
+- **Recommend contextual scripture** for spiritual guidance  
+- **Generate pastoral responses** in Dr. Myles' authentic voice
+- **Process FAQ inquiries** with enhanced, personalized answers
+
+**Built for scale** with Redis caching, async processing, and comprehensive monitoring.
 
 ---
 
-## 📁 Project Structure Overview
+## 🏗️ Architecture
 
-The project is structured as follows:
-
-```bash
-inbound_ministry/
-├── agents/
-│   ├── api.py
-│   ├── analytics.py
-│   ├── escalation_detector.py
-│   ├── faq_tool.py
-│   ├── inbound_agent.py
-│   ├── tone_polisher.py
-│   └── utils.py
-├── data/
-│   ├── faqs.json
-│   └── verses.json
-├── main.py
-├── requirements.txt
-└── README.md
+```mermaid
+graph TD
+    A[Incoming Message] --> B[Escalation Detection Agent]
+    B --> C[Scripture Recommendation Agent]
+    C --> D[FAQ Lookup System]
+    D --> E[Response Polishing Agent]
+    E --> F[Final Pastoral Response]
+    
+    G[Redis Cache] --> B
+    G --> C
+    G --> E
+    
+    H[ChromaDB] --> D
+    I[Analytics Logger] --> J[Performance Metrics]
 ```
 
-### `agents/` Directory
+### Core Components
 
-This directory contains all the Python scripts that make up the core functionality of the system.
-
-- `api.py`: Defines the FastAPI endpoints for the system.
-- `analytics.py`: Handles logging and analytics.
-- `escalation_detector.py`: Detects sensitive topics that require human intervention.
-- `faq_tool.py`: Handles FAQ retrieval using ChromaDB.
-- `inbound_agent.py`: Orchestrates the entire message processing pipeline.
-- `tone_polisher.py`: Polishes the tone of the responses.
-- `utils.py`: Contains utility functions and setup.
-
-### `data/` Directory
-
-This directory contains the data used by the system.
-
-- `faqs.json`: Contains the FAQs used for vector search.
-- `verses.json`: Contains a list of verses for fallback scripture recommendations.
-
-### `main.py`
-
-This is the entry point for the application. It starts the FastAPI server.
-
-### `requirements.txt`
-
-This file contains the Python dependencies required to run the application.
-
-### `README.md`
-
-This file contains the project documentation you're reading now.
+| Component | Purpose | Technology |
+|-----------|---------|------------|
+| **Escalation Agent** | Identifies sensitive topics | Swarms + GPT-3.5 |
+| **Scripture Agent** | Contextual verse recommendations | Swarms + GPT-3.5 |
+| **Tone Agent** | Dr. Myles pastoral voice | Swarms + GPT-3.5 |
+| **FAQ System** | Semantic search & enhancement | ChromaDB + Swarms |
+| **Caching Layer** | Performance optimization | Redis |
+| **API Gateway** | RESTful endpoints | FastAPI |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-
-1. **Python 3.8+**: Ensure you have Python installed. You can download it from [python.org](https://www.python.org/downloads/).
-2. **Redis**: The system uses Redis for caching. You can download and install it from [redis.io](https://redis.io/download/).
-3. **LM Studio**: The system uses LM Studio for local LLM inference. You can download it from [lmstudio.ai](https://lmstudio.ai/).
-4. **OpenAI API Key**: You'll need an OpenAI API key for the escalation detection and scripture recommendation features.
+- Python 3.8+
+- Redis Server
+- OpenAI API Key
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo.git
-   cd your-repo
-   ```
-
-2. Install the Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Set up environment variables:
-   ```bash
-   touch .env
-   ```
-   Add the following variables to the `.env` file:
-   ```
-   REDIS_HOST=localhost
-   REDIS_PORT=6379
-   LM_STUDIO_URL=http://localhost:1234/v1/chat/completions
-   LM_MODEL_NAME=mythomax-13b
-   OPENAI_API_KEY=your_openai_api_key
-   ```
-
-4. Run the application:
-   ```bash
-   python main.py
-   ```
-
-The application should now be running at `http://localhost:8000`.
-
----
-
-## 📝 API Endpoints
-Swagger UI: http://localhost:8000/docs
-OpenAPI JSON: http://localhost:8000/openapi.json
-
-✅ Example: POST /tone-polish
-Input:
-json
-Always show details
-
-
-{
-  "raw_response": "I don't know if God hears me anymore.",
-  "context": "Person struggling with faith",
-  "scripture": "Psalm 34:17"
-}
-Output:
-json
-Always show details
-
-
-{
-  "polished_response": "Beloved, even in your silence, the Lord hears your cry. As Psalm 34:17 assures us, 'The righteous cry out, and the Lord hears them.'"
-}
-
----
-## Dependencies
-From requirements.txt
 ```bash
-fastapi==0.116.0
-uvicorn==0.35.0
-openai==0.28.1
-redis==6.2.0
-python-dotenv==1.1.1
+# 1. Clone repository
+git clone https://github.com/Sage-Nwanne/inbound_ministry_agent_system.git
+cd inbound_ministry_agent_system
 
-Optional enhancements:
-chromadb==1.0.15
-sentence-transformers==5.0.0
-PyMuPDF==1.23.7
-httpx==0.28.1
-pandas==2.2.2
+# 2. Install dependencies
+pip install -r requirements.txt
 
+# 3. Configure environment
+cp .env.example .env
+# Edit .env with your OpenAI API key
+
+# 4. Start Redis
+redis-server
+
+# 5. Launch application
+python main.py
 ```
 
-✅ Testing & QA Checklist
+**API Available at:** `http://localhost:8000`  
+**Documentation:** `http://localhost:8000/docs`
 
-🧪 Environment & Setup
-.env is configured
+---
 
-Redis is running locally
+## 🔧 Configuration
 
-LM Studio is active with Mythomax model
+### Environment Variables
 
-requirements.txt is fully installed
+```env
+# Required
+OPENAI_API_KEY=sk-your-openai-key-here
 
-⚙️ API Validation
- GET / health check passes
+# Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_DB=0
 
- POST /tone-polish returns styled response
+# Optional
+HOST=0.0.0.0
+PORT=8000
+FAQ_DATA_PATH=./data/faqs.json
+```
 
- Response includes scripture integration
+### Agent Customization
 
-🧠 Redis Caching
- Repeat queries hit cache (check logs or timing)
+Modify agent behavior in `agents/swarm_agents.py`:
 
- Redis keys like tone:<hash> or faq:<hash> are present
+```python
+escalation_agent = Agent(
+    agent_name="EscalationDetector",
+    system_prompt="Your custom escalation detection prompt...",
+    llm=model,
+    max_loops=1,
+    temperature=0.3  # Adjust for consistency
+)
+```
 
-📚 FAQ Tool
- data/faqs.json is loaded
+---
 
- Vector matching returns relevant answers for similar questions
+## 📡 API Reference
 
-🧹 Error Handling
- LM Studio down triggers fallback
+### Core Endpoints
 
- Redis unavailable logs warning
+#### Process Ministry Message
+```http
+POST /inbound
+Content-Type: application/json
 
- Missing .env raises clear error
+{
+  "message": "I'm struggling with prayer",
+  "user_id": "user123",
+  "source": "website"
+}
+```
 
-🚧 Known Notes
-openai.api_base must be set to http://localhost:1234/v1
+**Response:**
+```json
+{
+  "reply": "Beloved, prayer can feel challenging at times. Remember Matthew 6:9-11...",
+  "needs_escalation": false,
+  "framework": "swarms"
+}
+```
 
-Works 100% offline using LM Studio + Redis
+#### FAQ Lookup
+```http
+POST /faq
+Content-Type: application/json
 
-Escalation detection and analytics are modular
+{
+  "question": "How do I join a small group?"
+}
+```
 
-No authentication required for LM Studio setup
+#### Escalation Check
+```http
+POST /escalation-check
+Content-Type: application/json
 
-✅ Summary
-✔️ Modular Agents
-✔️ Redis Caching
-✔️ Swagger Docs
-✔️ Environment Driven
-✔️ Vector Search + Tone Polishing
+{
+  "message": "I'm having thoughts of self-harm"
+}
+```
 
+### Monitoring Endpoints
 
+- `GET /` - Health check
+- `GET /analytics` - Performance metrics
+- `GET /docs` - Interactive API documentation
 
+---
 
+## 🧪 Testing & Development
 
+### Unit Testing
+```bash
+# Test individual agents
+python -c "
+from agents.swarm_agents import detect_escalation_swarm
+result = detect_escalation_swarm('I need prayer guidance')
+print(f'Escalation needed: {result}')
+"
+```
 
- *Everything's ready for local use or next-stage productionization.*
+### Integration Testing
+```bash
+# Test complete workflow
+python -c "
+from agents.inbound_agent import inbound_agent
+response, faq_matched = inbound_agent('How do I strengthen my faith?')
+print(f'Response: {response[:100]}...')
+print(f'FAQ matched: {faq_matched}')
+"
+```
 
-**— Sage**
+### Load Testing
+```bash
+# Install testing tools
+pip install httpx pytest
+
+# Run load tests
+python tests/load_test.py
+```
+
+---
+
+## 📊 Performance & Monitoring
+
+### Caching Strategy
+- **Agent responses:** 24-hour TTL
+- **Scripture recommendations:** 24-hour TTL  
+- **FAQ enhancements:** 24-hour TTL
+
+### Metrics Tracked
+- Response times per endpoint
+- Escalation rates
+- FAQ match rates
+- Agent performance
+- Error rates
+
+### Logging
+```python
+# Structured logging format
+{
+  "timestamp": "2024-01-15T10:30:00Z",
+  "level": "INFO",
+  "message": "Swarms workflow completed",
+  "user_id": "user123",
+  "response_time_ms": 1250,
+  "escalated": false
+}
+```
+
+---
+
+## 🚢 Deployment
+
+### Docker Deployment
+```dockerfile
+FROM python:3.9-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+EXPOSE 8000
+
+CMD ["python", "main.py"]
+```
+
+### Production Checklist
+- [ ] Set `OPENAI_API_KEY` in production environment
+- [ ] Configure Redis persistence and clustering
+- [ ] Set up log aggregation (ELK stack recommended)
+- [ ] Configure monitoring alerts
+- [ ] Set up SSL/TLS termination
+- [ ] Configure rate limiting
+- [ ] Set up backup procedures for FAQ data
+
+---
+
+## 🔒 Security Considerations
+
+- **API Key Protection:** Never commit API keys to version control
+- **Input Validation:** All user inputs are sanitized
+- **Rate Limiting:** Implement per-user rate limits in production
+- **Escalation Safety:** System defaults to escalation on errors
+- **Data Privacy:** No sensitive user data stored in logs
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+### Development Standards
+- Follow PEP 8 style guidelines
+- Add unit tests for new features
+- Update documentation for API changes
+- Test with multiple Python versions
+
+---
+
+## 📚 Resources & Support
+
+- **Swarms Framework:** [Documentation](https://github.com/kyegomez/swarms)
+- **FastAPI Guide:** [Official Docs](https://fastapi.tiangolo.com/)
+- **Redis Setup:** [Installation Guide](https://redis.io/docs/getting-started/)
+- **OpenAI API:** [API Reference](https://platform.openai.com/docs)
+
+### Support Channels
+- **Issues:** [GitHub Issues](https://github.com/Sage-Nwanne/inbound_ministry_agent_system/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/Sage-Nwanne/inbound_ministry_agent_system/discussions)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Version:** 2.0.0 | **Framework:** Swarms AI | **Status:** Production Ready
+
+*Empowering ministry through intelligent automation while preserving the human touch.*
 
 
 
