@@ -4,6 +4,7 @@ import os
 import json
 import random
 import hashlib
+from typing import Optional
 from dotenv import load_dotenv
 from agents.utils import setup_logging, get_redis_client
 
@@ -11,21 +12,33 @@ load_dotenv()
 logger = setup_logging()
 redis_client = get_redis_client()
 
-# Initialize OpenAI model for swarms (correct API)
-try:
-    model = OpenAIChat(
-        openai_api_key=os.getenv("OPENAI_API_KEY"),
-        model_name="gpt-3.5-turbo",
-        temperature=0.7,
-        max_tokens=500
-    )
-    logger.info("OpenAI model initialized successfully for Swarms")
-except Exception as e:
-    logger.error(f"Failed to initialize OpenAI model: {str(e)}")
-    model = None
+# Fix the model initialization to handle missing API key gracefully
+def initialize_model():
+    """Initialize OpenAI model with proper error handling"""
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        logger.warning("OPENAI_API_KEY not found. Some features may not work.")
+        return None
     
+    try:
+        from swarms.models import OpenAIChat
+        model = OpenAIChat(
+            openai_api_key=api_key,
+            model_name="gpt-3.5-turbo",
+            temperature=0.7,
+            max_tokens=500
+        )
+        logger.info("OpenAI model initialized successfully for Swarms")
+        return model
+    except Exception as e:
+        logger.error(f"Failed to initialize OpenAI model: {str(e)}")
+        return None
+
+model = initialize_model()
+
+# Add fallback for when model is None
 if not model:
-    raise RuntimeError("Failed to initialize OpenAI model - check OPENAI_API_KEY")
+    logger.warning("Running without OpenAI model - using fallback responses")
 
 # Escalation Detection Agent
 escalation_agent = Agent(
@@ -102,7 +115,17 @@ def detect_escalation_swarm(message: str) -> bool:
                 return "ESCALATE" in result.upper()
         
         # Run escalation detection
-        result = escalation_agent.run(f"Analyze this message for escalation: {message}")
+        prompt = f"""
+        Analyze this message for escalation needs. Respond with "ESCALATE" if the message contains:
+        - Suicidal thoughts or self-harm
+        - Abuse situations
+        - Mental health crises
+        - Urgent pastoral care needs
+        
+        Message: {message}
+        """
+        
+        result = escalation_agent.run(prompt)
         
         # Cache result if Redis available
         if redis_client:
