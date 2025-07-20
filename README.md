@@ -1,6 +1,6 @@
-# Ministry Response System - AI-Powered with Swarms Framework
+# Ministry AI Hub - Professional Communication Platform
 
-> **Professional AI-driven ministry communication system** that provides intelligent, contextual responses to inbound messages while maintaining pastoral care standards.
+> **Enterprise-grade AI-driven ministry communication system** that provides intelligent, contextual responses to inbound messages while maintaining pastoral care standards and donor engagement excellence.
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.116.0-green.svg)](https://fastapi.tiangolo.com)
@@ -9,340 +9,362 @@
 
 ## 🎯 Overview
 
-This system automates ministry response workflows using advanced AI agents that:
-- **Detect sensitive content** requiring human intervention
-- **Recommend contextual scripture** for spiritual guidance  
-- **Generate pastoral responses** in Dr. Myles' authentic voice
-- **Process FAQ inquiries** with enhanced, personalized answers
-- **🆕 Generate personalized donor thank-you messages**
-- **🆕 Share compelling ministry impact stories**
-- **🆕 Promote recurring giving with biblical stewardship**
-- **🆕 Answer donation and tax-related questions**
+The Ministry AI Hub is a comprehensive communication platform featuring two specialized AI agent systems:
 
-**Built for scale** with Redis caching, async processing, and comprehensive monitoring.
+### 🔵 **Inbound Communications System** - *Digital Minister of First Impressions*
+- **Process inquiries** from website, email, and contact forms
+- **Detect sensitive content** requiring human pastoral intervention
+- **Provide FAQ responses** with enhanced, personalized answers
+- **Multilingual support** for global ministry outreach (English, Spanish, French, Portuguese, German)
+- **Prayer request routing** with deliverance session scheduling
+- **Maintain Dr. Myles' authentic pastoral voice** in all communications
+
+### 🟢 **Donation Engagement System** - *Digital Stewardship Companion*
+- **Generate personalized thank-you messages** with scripture-based gratitude
+- **Share compelling impact stories** highlighting ministry achievements
+- **Promote biblical stewardship** and recurring giving opportunities
+- **Answer donation questions** including tax deductibility and giving methods
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ **System Architecture**
 
-```mermaid
-graph TD
-    A[Incoming Message] --> B[Ministry Hub Director]
-    B --> C[Inbound Agents]
-    B --> D[Donation Agents]
-    
-    C --> E[Escalation Detection Agent]
-    C --> F[Scripture Recommendation Agent]
-    C --> G[FAQ Lookup System]
-    C --> H[Response Polishing Agent]
-    
-    D --> I[Thank You Agent]
-    D --> J[Impact Story Agent]
-    D --> K[Recurring Giving Agent]
-    D --> L[Donation Q&A Agent]
-    
-    M[Redis Cache] --> C
-    M --> D
-    N[ChromaDB] --> G
-    O[Analytics Logger] --> P[Performance Metrics]
+```
+Ministry AI Hub/
+├── ministry_hub_main.py           # Main FastAPI application
+├── agents/                        # AI Agent Systems
+│   ├── inbound/                   # Inbound Communications
+│   │   ├── api.py                 # Inbound API routes
+│   │   ├── inbound_agent.py       # Main message processor
+│   │   └── swarm_agents.py        # Specialized AI agents
+│   ├── donation/                  # Donation Engagement
+│   │   ├── api.py                 # Donation API routes
+│   │   └── donation_agents.py     # Donation AI agents
+│   └── shared/                    # Shared Components
+│       ├── analytics.py           # Interaction logging
+│       ├── faq_tool.py           # FAQ system
+│       └── utils.py              # Utility functions
+├── data/                          # Data Files
+│   ├── faq_data.json             # FAQ database
+│   └── impact_stories.json       # Impact story templates
+├── requirements.txt               # Python dependencies
+├── .env.example                   # Environment template
+└── README.md                      # This file
 ```
 
-### Core Components
-
-| Component | Purpose | Technology |
-|-----------|---------|------------|
-| **Ministry Hub** | Central director routing requests | FastAPI + Swarms |
-| **Escalation Agent** | Identifies sensitive topics | Swarms + GPT-3.5 |
-| **Scripture Agent** | Contextual verse recommendations | Swarms + GPT-3.5 |
-| **Tone Agent** | Dr. Myles pastoral voice | Swarms + GPT-3.5 |
-| **FAQ System** | Semantic search & enhancement | ChromaDB + Swarms |
-| **🆕 Thank You Agent** | Personalized donor appreciation | Swarms + GPT-3.5 |
-| **🆕 Impact Story Agent** | Ministry achievement narratives | Swarms + GPT-3.5 |
-| **🆕 Recurring Giving Agent** | Stewardship promotion | Swarms + GPT-3.5 |
-| **🆕 Donation Q&A Agent** | Tax and giving questions | Swarms + GPT-3.5 |
-| **Caching Layer** | Performance optimization | Redis |
-| **API Gateway** | RESTful endpoints | FastAPI |
-
 ---
 
-## 🚀 Quick Start
+## 🚀 **Quick Start Guide**
 
-### Prerequisites
-- Python 3.8+
-- Redis Server
-- OpenAI API Key
+### **Prerequisites**
+- **Python 3.8+** installed
+- **Redis Server** for caching
+- **OpenAI API Key** for AI functionality
+- **Git** for repository management
 
-### Installation
+### **Step 1: Repository Setup**
 
 ```bash
-# 1. Clone repository
-git clone https://github.com/Sage-Nwanne/inbound_ministry_agent_system.git
-cd inbound_ministry_agent_system
+# Clone the repository
+git clone https://github.com/Sage-Nwanne/inbound_ministry_clean.git
+cd inbound_ministry_clean
 
-# 2. Install dependencies
+# Verify Python version
+python --version  # Should be 3.8+
+```
+
+### **Step 2: Environment Setup**
+
+```bash
+# Create virtual environment
+python -m venv ministry_env
+
+# Activate virtual environment
+# Windows:
+ministry_env\Scripts\activate
+# macOS/Linux:
+source ministry_env/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
+```
 
-# 3. Configure environment
+### **Step 3: Configuration**
+
+```bash
+# Copy environment template
 cp .env.example .env
-# Edit .env with your OpenAI API key
 
-# 4. Start Redis
+# Edit .env with your settings
+nano .env  # or your preferred editor
+```
+
+**Required `.env` configuration:**
+```env
+# OpenAI API Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Redis Configuration (optional - defaults work locally)
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_DB=0
+
+# Logging Configuration
+LOG_LEVEL=INFO
+```
+
+### **Step 4: Redis Setup**
+
+**Option A: Local Redis**
+```bash
+# Install Redis (varies by OS)
+# Ubuntu/Debian:
+sudo apt-get install redis-server
+
+# macOS (Homebrew):
+brew install redis
+
+# Start Redis
 redis-server
+```
 
-# 5. Launch Ministry Hub
+**Option B: Docker Redis**
+```bash
+# Run Redis in Docker
+docker run -d -p 6379:6379 --name ministry-redis redis:alpine
+```
+
+**Verify Redis:**
+```bash
+redis-cli ping  # Should return: PONG
+```
+
+### **Step 5: Launch Ministry Hub**
+
+```bash
+# Start the Ministry AI Hub
 python ministry_hub_main.py
 ```
 
-**Ministry Hub Available at:** `http://localhost:8000`  
-**Documentation:** `http://localhost:8000/docs`
+**Expected output:**
+```
+🚀 Starting Ministry AI Hub...
+✅ Environment validation passed
+INFO:     Started server process [12345]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+```
+
+### **Step 6: Verify Installation**
+
+**Access points:**
+- **Main Hub:** http://localhost:8000
+- **API Documentation:** http://localhost:8000/docs
+- **Health Check:** http://localhost:8000/health
 
 ---
 
-## 📡 API Reference
+## 🧪 **API Testing**
 
-### 🆕 **Ministry Hub Endpoints**
+### **Inbound Communications Tests**
 
-#### Combined Hub Root
-```http
-GET /
-```
-
-**Response:**
-```json
-{
-  "service": "Ministry AI Hub",
-  "version": "1.0.0",
-  "systems": {
-    "inbound": "Message processing, FAQ, escalation detection",
-    "donation": "Thank you messages, impact stories, recurring giving"
-  },
-  "endpoints": {
-    "inbound": "/api/v1/inbound",
-    "donation_thank_you": "/api/v1/donation/thank-you",
-    "donation_impact": "/api/v1/donation/impact-story",
-    "donation_recurring": "/api/v1/donation/recurring-giving",
-    "donation_qa": "/api/v1/donation/question"
-  }
-}
-```
-
-### Inbound Message Endpoints
-
-#### Process Ministry Message
-```http
-POST /api/v1/inbound
-Content-Type: application/json
-
-{
-  "message": "I'm struggling with prayer",
-  "user_id": "user123",
-  "source": "website"
-}
-```
-
-#### FAQ Lookup
-```http
-POST /api/v1/faq
-Content-Type: application/json
-
-{
-  "question": "How do I join a small group?"
-}
-```
-
-### 🆕 **Donation Engagement Endpoints**
-
-#### Generate Thank You Message
-```http
-POST /api/v1/donation/thank-you
-Content-Type: application/json
-
-{
-  "donor_name": "John Smith",
-  "amount": "$500",
-  "email": "john@example.com"
-}
-```
-
-**Response:**
-```json
-{
-  "message": "Dear John, Your generous gift of $500 fills our hearts with gratitude...",
-  "donor_name": "John Smith",
-  "amount": "$500",
-  "response_time_ms": 1250
-}
-```
-
-#### Get Impact Story
-```http
-POST /api/v1/donation/impact-story
-Content-Type: application/json
-
-{
-  "category": "youth",
-  "donor_segment": "major_donor"
-}
-```
-
-#### Promote Recurring Giving
-```http
-POST /api/v1/donation/recurring-giving
-Content-Type: application/json
-
-{
-  "donor_name": "Sarah Johnson",
-  "current_amount": "$100"
-}
-```
-
-#### Answer Donation Questions
-```http
-POST /api/v1/donation/question
-Content-Type: application/json
-
-{
-  "question": "Is my donation tax deductible?",
-  "donor_context": "first_time_donor"
-}
-```
-
-### Monitoring Endpoints
-
-- `GET /health` - Comprehensive health check for both systems
-- `GET /api/v1/donation/health` - Donation system health
-- `GET /docs` - Interactive API documentation
-
----
-
-## 🧪 Testing & Development
-
-### Test Donation Agents
 ```bash
-# Test thank you generation
-python -c "
-from agents.donation_agents import send_thank_you_message
-result = send_thank_you_message('John', '$100')
-print(result)
-"
+# Test message processing
+curl -X POST http://localhost:8000/api/v1/inbound/process \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "I need prayer for my family",
+    "user_id": "test_user",
+    "source": "website",
+    "language": "en"
+  }'
 
-# Test impact story
-python -c "
-from agents.donation_agents import share_impact_story
-result = share_impact_story('youth')
-print(result)
-"
+# Test multilingual translation
+curl -X POST http://localhost:8000/api/v1/inbound/translate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "I need prayer for healing",
+    "target_language": "es"
+  }'
+
+# Test prayer request routing
+curl -X POST http://localhost:8000/api/v1/inbound/prayer \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "Please pray for my healing",
+    "user_id": "prayer_user",
+    "urgency": "normal"
+  }'
+
+# Test FAQ lookup
+curl -X POST http://localhost:8000/api/v1/inbound/faq \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "What are your service times?",
+    "user_id": "faq_user",
+    "language": "en"
+  }'
 ```
 
-### Test Complete Hub
+### **Donation Engagement Tests**
+
 ```bash
-# Test ministry hub endpoints
+# Test thank-you message generation
 curl -X POST http://localhost:8000/api/v1/donation/thank-you \
   -H "Content-Type: application/json" \
-  -d '{"donor_name": "Test User", "amount": "$50"}'
+  -d '{
+    "donor_name": "John Smith",
+    "amount": "$100",
+    "email": "john@example.com"
+  }'
+
+# Test impact story generation
+curl -X POST http://localhost:8000/api/v1/donation/impact-story \
+  -H "Content-Type: application/json" \
+  -d '{
+    "category": "youth",
+    "donor_segment": "regular_donor"
+  }'
+
+# Test recurring giving promotion
+curl -X POST http://localhost:8000/api/v1/donation/recurring \
+  -H "Content-Type: application/json" \
+  -d '{
+    "donor_name": "Jane Doe",
+    "current_amount": "$50",
+    "suggested_frequency": "monthly"
+  }'
+
+# Test donation Q&A
+curl -X POST http://localhost:8000/api/v1/donation/qa \
+  -H "Content-Type: application/json" \
+  -d '{
+    "question": "Is my donation tax deductible?",
+    "donor_context": "first_time_donor"
+  }'
 ```
 
 ---
 
-## 📊 Performance & Monitoring
+## 📊 **Interactive API Documentation**
 
-### 🆕 **Enhanced Caching Strategy**
-- **Agent responses:** 24-hour TTL
-- **Scripture recommendations:** 24-hour TTL  
-- **FAQ enhancements:** 24-hour TTL
-- **🆕 Impact stories:** 12-hour TTL
-- **🆕 Thank you templates:** 6-hour TTL
+Access comprehensive API documentation:
+- **Swagger UI:** http://localhost:8000/docs
+- **ReDoc:** http://localhost:8000/redoc
 
-### 🆕 **New Metrics Tracked**
-- Donation engagement rates
-- Thank you message generation times
-- Impact story effectiveness
-- Recurring giving conversion rates
-- Donor question resolution rates
+Features:
+- ✅ Interactive endpoint testing
+- ✅ Request/response schemas
+- ✅ Parameter documentation
+- ✅ Code examples for integration
 
 ---
 
-## 🚢 Deployment
+## 🌍 **Supported Languages**
 
-### 🆕 **Ministry Hub Deployment**
-```dockerfile
-FROM python:3.9-slim
+| Language | Code | Status |
+|----------|------|--------|
+| English | `en` | ✅ Primary |
+| Spanish | `es` | ✅ Supported |
+| French | `fr` | ✅ Supported |
+| Portuguese | `pt` | ✅ Supported |
+| German | `de` | ✅ Supported |
 
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+---
 
-COPY . .
-EXPOSE 8000
+## 🔧 **Troubleshooting**
 
-# Run the combined ministry hub
-CMD ["python", "ministry_hub_main.py"]
+### **Common Issues**
+
+**"OpenAI API key not found"**
+```bash
+# Verify .env file
+cat .env | grep OPENAI_API_KEY
+# Ensure key is properly set without quotes
 ```
 
-### Production Checklist
-- [ ] Set `OPENAI_API_KEY` in production environment
-- [ ] Configure Redis persistence and clustering
-- [ ] Set up log aggregation (ELK stack recommended)
-- [ ] Configure monitoring alerts for both inbound and donation systems
-- [ ] Set up SSL/TLS termination
-- [ ] Configure rate limiting
-- [ ] Set up backup procedures for FAQ and impact story data
-- [ ] **🆕 Configure donation data backup and security**
-- [ ] **🆕 Set up donor privacy compliance monitoring**
+**"Redis connection failed"**
+```bash
+# Check Redis status
+redis-cli ping
+# If not running:
+redis-server
+```
+
+**"Port 8000 already in use"**
+```bash
+# Use different port
+python ministry_hub_main.py --port 8001
+# Or kill existing process
+lsof -ti:8000 | xargs kill -9
+```
+
+**"Module not found errors"**
+```bash
+# Ensure virtual environment is active
+source ministry_env/bin/activate  # Linux/macOS
+ministry_env\Scripts\activate     # Windows
+
+# Reinstall dependencies
+pip install -r requirements.txt
+```
+
+**"FAQ data not found"**
+```bash
+# Ensure data directory exists
+mkdir -p data
+# Create basic FAQ file if missing
+echo '{"faqs": []}' > data/faq_data.json
+```
 
 ---
 
-## 🆕 **New Data Files**
+## 🎯 **Key Features**
 
-### Impact Stories (`data/impact_stories.json`)
-Contains ministry achievement data for generating compelling donor communications:
-- Community outreach metrics
-- Youth program growth
-- Senior care initiatives  
-- Mission support updates
+### **Inbound Communications**
+- ✅ **Escalation Detection** - Identifies sensitive topics requiring human intervention
+- ✅ **Scripture Integration** - Provides relevant biblical guidance
+- ✅ **Multilingual Support** - Processes messages in 5 languages
+- ✅ **Prayer Routing** - Directs prayer requests to appropriate ministry teams
+- ✅ **FAQ Enhancement** - Personalizes standard answers with pastoral tone
+- ✅ **Dr. Myles Voice** - Maintains authentic pastoral communication style
 
-### Enhanced Verses (`data/verses.json`)
-Extended with giving and stewardship scriptures for donation communications.
+### **Donation Engagement**
+- ✅ **Personalized Thank-You** - Scripture-based gratitude messages
+- ✅ **Impact Stories** - Compelling ministry achievement narratives
+- ✅ **Stewardship Promotion** - Biblical giving encouragement
+- ✅ **Donation Q&A** - Comprehensive giving information
 
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-### Development Standards
-- Follow PEP 8 style guidelines
-- Add unit tests for new features
-- Update documentation for API changes
-- Test with multiple Python versions
-- **🆕 Test both inbound and donation agent functionality**
+### **System Features**
+- ✅ **Real-time Processing** - Instant message handling
+- ✅ **Analytics Logging** - Comprehensive interaction tracking
+- ✅ **Modular Architecture** - Easy maintenance and expansion
+- ✅ **API-First Design** - Simple integration with existing systems
 
 ---
 
-## 📚 Resources & Support
+## 📈 **Next Steps**
 
-- **Swarms Framework:** [Documentation](https://github.com/kyegomez/swarms)
-- **FastAPI Guide:** [Official Docs](https://fastapi.tiangolo.com/)
-- **Redis Setup:** [Installation Guide](https://redis.io/docs/getting-started/)
-- **OpenAI API:** [API Reference](https://platform.openai.com/docs)
-
-### Support Channels
-- **Issues:** [GitHub Issues](https://github.com/Sage-Nwanne/inbound_ministry_agent_system/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/Sage-Nwanne/inbound_ministry_agent_system/discussions)
+1. **📋 Explore API Documentation** - http://localhost:8000/docs
+2. **🧪 Test All Endpoints** - Use the interactive interface
+3. **⚙️ Configure Ministry Data** - Update `data/` directory files
+4. **🔗 Integrate Systems** - Connect to your existing platforms
+5. **📊 Monitor Analytics** - Review interaction logs
+6. **🚀 Deploy to Production** - Follow deployment best practices
 
 ---
 
-## 📄 License
+## 💡 **Support & Resources**
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- **📖 Documentation:** Available in `/docs` directory
+- **🐛 Issues:** [GitHub Issues](https://github.com/Sage-Nwanne/inbound_ministry_clean/issues)
+- **💬 Discussions:** [GitHub Discussions](https://github.com/Sage-Nwanne/inbound_ministry_clean/discussions)
+- **📧 Support:** Contact your system administrator
 
 ---
 
-**Version:** 2.1.0 | **Framework:** Swarms AI | **Status:** Production Ready
+**Version:** 2.0.0 | **Framework:** Swarms AI + FastAPI | **Status:** Production Ready
 
 *Empowering ministry through intelligent automation while preserving the human touch.*
 

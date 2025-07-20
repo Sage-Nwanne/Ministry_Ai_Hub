@@ -1,0 +1,29 @@
+{
+  "faqs": [
+    {
+      "keywords": ["service", "times", "schedule", "when"],
+      "question": "What are your service times?",
+      "answer": "Our worship services are held every Sunday at 9:00 AM and 11:00 AM. We also have Wednesday evening Bible study at 7:00 PM."
+    },
+    {
+      "keywords": ["location", "address", "where", "directions"],
+      "question": "Where is the church located?",
+      "answer": "We are located at 123 Faith Street, Ministry City. Parking is available on-site and street parking is also available."
+    },
+    {
+      "keywords": ["contact", "phone", "email", "reach"],
+      "question": "How can I contact the church?",
+      "answer": "You can reach us at (555) 123-4567 or email us at info@ministryaihub.org. Our office hours are Monday-Friday, 9 AM to 5 PM."
+    },
+    {
+      "keywords": ["prayer", "request", "pray"],
+      "question": "How do I submit a prayer request?",
+      "answer": "We would be honored to pray for you. You can submit prayer requests through our website, call our prayer line, or speak with any of our pastoral staff."
+    },
+    {
+      "keywords": ["donation", "give", "tithe", "offering"],
+      "question": "How can I give or donate?",
+      "answer": "Thank you for your heart to give! You can donate online through our website, give during service, or mail a check to our church address. All donations are tax-deductible."
+    }
+  ]
+}

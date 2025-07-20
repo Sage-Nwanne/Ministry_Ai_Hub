@@ -1,30 +1,44 @@
-[
-  {
-    "title": "Community Outreach",
-    "summary": "Served over 300 meals to local families last month thanks to donor support.",
-    "category": "outreach",
-    "impact_metric": "300 meals served",
-    "donation_range": "$1000-$5000"
-  },
-  {
-    "title": "Youth Program Growth", 
-    "summary": "Welcomed 25 new students into discipleship groups this quarter.",
-    "category": "youth",
-    "impact_metric": "25 new students",
-    "donation_range": "$500-$2000"
-  },
-  {
-    "title": "Senior Care Ministry",
-    "summary": "Provided weekly visits and care packages to 40 elderly members.",
-    "category": "seniors",
-    "impact_metric": "40 seniors supported",
-    "donation_range": "$200-$1000"
-  },
-  {
-    "title": "Mission Support",
-    "summary": "Funded 3 missionary families serving in underserved communities.",
-    "category": "missions",
-    "impact_metric": "3 missionary families",
-    "donation_range": "$2000+"
-  }
-]
+{
+  "general": [
+    {
+      "title": "Community Transformation",
+      "description": "Through your generous support, we've been able to serve over 500 families this year with food assistance, counseling, and spiritual guidance."
+    },
+    {
+      "title": "Lives Changed",
+      "description": "Your partnership has enabled us to witness 150 baptisms and countless testimonies of transformed lives through our ministry programs."
+    }
+  ],
+  "youth": [
+    {
+      "title": "Next Generation Impact",
+      "description": "Our youth ministry has grown to 200+ active participants, with 85% reporting stronger faith and better life choices through our mentorship programs."
+    },
+    {
+      "title": "Youth Leadership Development",
+      "description": "Thanks to your support, 45 young people have completed our leadership training program and are now serving in various ministry capacities."
+    }
+  ],
+  "seniors": [
+    {
+      "title": "Senior Care Ministry",
+      "description": "Our senior ministry has provided companionship, meals, and spiritual care to over 300 elderly members of our community this year."
+    },
+    {
+      "title": "Wisdom Keepers Program",
+      "description": "Through your generosity, we've connected 100+ seniors with younger families, creating meaningful intergenerational relationships."
+    }
+  ],
+  "outreach": [
+    {
+      "title": "Community Outreach",
+      "description": "Your donations have enabled us to distribute 10,000 meals, provide clothing to 500 families, and offer free medical clinics to underserved communities."
+    }
+  ],
+  "missions": [
+    {
+      "title": "Global Missions Impact",
+      "description": "Through your faithful giving, we've supported 12 missionary families and established 3 new churches in underserved regions around the world."
+    }
+  ]
+}
