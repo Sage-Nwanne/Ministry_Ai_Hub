@@ -4,13 +4,16 @@
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.116.0-green.svg)](https://fastapi.tiangolo.com)
+[![Next.js](https://img.shields.io/badge/Next.js-15.4.3-black.svg)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19.1.0-blue.svg)](https://reactjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://typescriptlang.org)
 [![Swarms](https://img.shields.io/badge/Swarms-5.0+-purple.svg)](https://github.com/kyegomez/swarms)
 [![LiteLLM](https://img.shields.io/badge/LiteLLM-1.74+-orange.svg)](https://github.com/BerriAI/litellm)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 🎯 Overview
 
-The Ministry AI Hub is a comprehensive communication platform featuring two specialized AI agent systems powered by **LM Studio** and **Swarms AI Framework**:
+The Ministry AI Hub is a comprehensive communication platform featuring two specialized AI agent systems powered by **LM Studio** and **Swarms AI Framework**, with a modern **Next.js frontend** for seamless user interaction:
 
 ### 🔵 **Inbound Communications System** - *Digital Minister of First Impressions*
 - **Process inquiries** from website, email, and contact forms with intelligent routing
@@ -25,6 +28,14 @@ The Ministry AI Hub is a comprehensive communication platform featuring two spec
 - **Share compelling impact stories** highlighting ministry achievements and transformation
 - **Promote biblical stewardship** and recurring giving opportunities with spiritual growth focus
 - **Answer donation questions** including tax deductibility, giving methods, and planned giving
+
+### 🎨 **Modern Frontend Interface** - *Professional Ministry Dashboard*
+- **Responsive web application** built with Next.js 15 and React 19
+- **Real-time chat interface** for AI-powered ministry conversations
+- **Sermon insights dashboard** with transcript management and key takeaways
+- **Donation flow management** with stewardship companion features
+- **Analytics dashboard** for ministry effectiveness tracking
+- **Mobile-optimized design** with ministry branding and accessibility
 
 ---
 
@@ -45,7 +56,24 @@ Ministry AI Hub/
 │       ├── analytics.py           # Interaction logging & metrics
 │       ├── faq_tool.py           # FAQ system with ChromaDB
 │       └── utils.py              # Utility functions & helpers
-├── data/                          # Data Files
+├── ministry-ai-hub-frontend/      # Next.js Frontend Application
+│   ├── src/
+│   │   ├── app/                   # Next.js App Router pages
+│   │   │   ├── page.tsx           # Dashboard homepage
+│   │   │   ├── chat/              # Chat interface pages
+│   │   │   ├── summaries/         # Sermon insights pages
+│   │   │   ├── donations/         # Donation flow pages
+│   │   │   └── analytics/         # Analytics dashboard pages
+│   │   ├── components/            # React components
+│   │   │   ├── layout/            # Header, Sidebar, Navigation
+│   │   │   ├── chat/              # Chat interface components
+│   │   │   ├── summaries/         # Sermon management components
+│   │   │   └── donations/         # Donation flow components
+│   │   └── data/                  # Mock data and TypeScript interfaces
+│   ├── package.json               # Frontend dependencies
+│   ├── tailwind.config.ts         # Tailwind CSS configuration
+│   └── next.config.ts             # Next.js configuration
+├── data/                          # Backend Data Files
 │   ├── faq_data.json             # FAQ database with ministry information
 │   └── impact_stories.json       # Impact story templates by category
 ├── requirements.txt               # Python dependencies
@@ -60,6 +88,7 @@ Ministry AI Hub/
 
 ### **Prerequisites**
 - **Python 3.8+** installed and accessible
+- **Node.js 18.17+** for the frontend application
 - **LM Studio** running locally with Qwen model
 - **Redis Server** for caching and session management
 - **Git** for repository management
@@ -73,9 +102,12 @@ cd inbound_ministry_clean
 
 # Verify Python version
 python --version  # Should be 3.8+
+
+# Verify Node.js version
+node --version     # Should be 18.17+
 ```
 
-### **Step 2: Environment Setup**
+### **Step 2: Backend Environment Setup**
 
 ```bash
 # Create virtual environment
@@ -87,11 +119,28 @@ ministry_env\Scripts\activate
 # macOS/Linux:
 source ministry_env/bin/activate
 
-# Install dependencies
+# Install backend dependencies
 pip install -r requirements.txt
 ```
 
-### **Step 3: LM Studio Configuration**
+### **Step 3: Frontend Environment Setup**
+
+```bash
+# Navigate to frontend directory
+cd ministry-ai-hub-frontend
+
+# Install frontend dependencies
+npm install
+# or
+yarn install
+# or
+pnpm install
+
+# Return to root directory
+cd ..
+```
+
+### **Step 4: LM Studio Configuration**
 
 **Install and Setup LM Studio:**
 1. Download [LM Studio](https://lmstudio.ai/) for your platform
@@ -106,7 +155,7 @@ pip install -r requirements.txt
 curl http://localhost:1234/v1/models
 ```
 
-### **Step 4: Environment Configuration**
+### **Step 5: Environment Configuration**
 
 ```bash
 # Copy environment template
@@ -158,7 +207,7 @@ ENABLE_ESCALATION_DETECTION=true               # Enable sensitive content detect
 ENABLE_DONATION_TRACKING=true                  # Enable donation engagement features
 ```
 
-### **Step 5: Redis Setup**
+### **Step 6: Redis Setup**
 
 **Option A: Local Redis Installation**
 ```bash
@@ -195,101 +244,14 @@ docker ps | grep ministry-redis
 redis-cli ping  # Should return: PONG
 ```
 
-### **Step 6: Data Files Setup**
-
-**Create FAQ Data File:**
-```bash
-# Ensure data directory exists
-mkdir -p data
-
-# Create basic FAQ file
-cat > data/faq_data.json << 'EOF'
-{
-  "faqs": [
-    {
-      "question": "What are your service times?",
-      "answer": "We have services on Sunday at 9:00 AM and 11:00 AM, and Wednesday evening at 7:00 PM.",
-      "category": "services",
-      "keywords": ["service", "times", "schedule", "sunday", "wednesday"]
-    },
-    {
-      "question": "How can I get baptized?",
-      "answer": "Baptism is a beautiful step of faith! Please speak with Pastor or attend our baptism class held monthly.",
-      "category": "baptism",
-      "keywords": ["baptism", "baptized", "water", "faith"]
-    },
-    {
-      "question": "Do you have children's ministry?",
-      "answer": "Yes! We have vibrant children's programs for ages 0-12 during all services, plus special events throughout the year.",
-      "category": "children",
-      "keywords": ["children", "kids", "youth", "nursery"]
-    }
-  ]
-}
-EOF
-```
-
-**Create Impact Stories File:**
-```bash
-cat > data/impact_stories.json << 'EOF'
-{
-  "youth": [
-    {
-      "title": "Youth Ministry Transformation",
-      "description": "Our youth program has grown by 40% this year, reaching 150 young people weekly with mentorship, biblical teaching, and life skills training.",
-      "impact": "40% growth, 150 youth reached weekly",
-      "metrics": {
-        "participants": 150,
-        "growth_rate": "40%",
-        "weekly_attendance": 120
-      }
-    }
-  ],
-  "seniors": [
-    {
-      "title": "Senior Care Ministry",
-      "description": "Monthly visits to 80 seniors in our community, providing companionship, prayer, practical support, and grocery assistance.",
-      "impact": "80 seniors served monthly",
-      "metrics": {
-        "seniors_served": 80,
-        "monthly_visits": 320,
-        "volunteer_hours": 240
-      }
-    }
-  ],
-  "missions": [
-    {
-      "title": "Global Missions Impact",
-      "description": "Supporting 12 missionary families across 8 countries, providing clean water to 500 families, and building 3 schools this year.",
-      "impact": "12 missionaries, 8 countries, 500 families served",
-      "metrics": {
-        "missionaries": 12,
-        "countries": 8,
-        "families_served": 500,
-        "schools_built": 3
-      }
-    }
-  ],
-  "general": [
-    {
-      "title": "Community Outreach",
-      "description": "Food pantry serving 200 families monthly, job training programs, and community events bringing hope to our neighborhood.",
-      "impact": "200 families fed monthly",
-      "metrics": {
-        "families_fed": 200,
-        "food_boxes": 800,
-        "job_placements": 25
-      }
-    }
-  ]
-}
-EOF
-```
-
-### **Step 7: Launch Ministry Hub**
+### **Step 7: Launch Ministry Hub Backend**
 
 ```bash
-# Start the Ministry AI Hub
+# Ensure virtual environment is activated
+source ministry_env/bin/activate  # Linux/macOS
+ministry_env\Scripts\activate     # Windows
+
+# Start the Ministry AI Hub backend
 python ministry_hub_main.py
 
 # Alternative: Run with custom port
@@ -299,7 +261,7 @@ python ministry_hub_main.py --port 8001
 uvicorn ministry_hub_main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-**Expected startup output:**
+**Expected backend startup output:**
 ```
 🚀 Starting Ministry AI Hub...
 ✅ Environment validation passed
@@ -312,22 +274,221 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
 
-### **Step 8: Verify Installation**
+### **Step 8: Launch Ministry Hub Frontend**
 
-**Access points:**
-- **Main Hub:** http://localhost:8000
+**Open a new terminal window/tab:**
+
+```bash
+# Navigate to frontend directory
+cd ministry-ai-hub-frontend
+
+# Start the Next.js development server
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+
+# Alternative: Start with Turbopack (faster)
+npm run dev --turbopack
+```
+
+**Expected frontend startup output:**
+```
+▲ Next.js 15.4.3
+- Local:        http://localhost:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 2.1s
+```
+
+### **Step 9: Verify Complete Installation**
+
+**Backend Access Points:**
+- **Main API:** http://localhost:8000
 - **API Documentation:** http://localhost:8000/docs
 - **Alternative Docs:** http://localhost:8000/redoc
 - **Health Check:** http://localhost:8000/health
 - **System Status:** http://localhost:8000/status
 
+**Frontend Access Points:**
+- **Main Dashboard:** http://localhost:3000
+- **Digital Minister Chat:** http://localhost:3000/chat
+- **Sermon Insights:** http://localhost:3000/summaries
+- **Stewardship Companion:** http://localhost:3000/donations
+- **Impact Dashboard:** http://localhost:3000/analytics
+
 ---
 
-## 🧪 **Comprehensive API Testing**
+## 🎨 **Frontend Navigation Guide**
 
-### **Inbound Communications Tests**
+### **Main Dashboard** (`/`)
+- **Overview Cards:** Quick stats and system status
+- **Module Navigation:** Access all four main features
+- **Recent Activity:** Latest interactions and updates
+- **Quick Actions:** Common tasks and shortcuts
 
-**1. Basic Message Processing:**
+### **Digital Minister Chat** (`/chat`)
+- **Conversation List:** Manage multiple chat sessions
+- **AI Chat Interface:** Real-time messaging with ministry AI
+- **Scripture Integration:** Contextual biblical guidance
+- **Escalation Detection:** Automatic routing for sensitive topics
+- **Quick Replies:** Pre-configured response options
+- **Language Support:** Multilingual conversation capabilities
+
+### **Sermon Insights** (`/summaries`)
+- **Sermon Grid:** Browse all sermon summaries
+- **Detailed View:** Expandable cards with full transcripts
+- **Key Takeaways:** Highlighted main points and lessons
+- **Download Options:** PDF export and sharing capabilities
+- **Search & Filter:** Find sermons by topic, speaker, or date
+- **Tags System:** Categorized content for easy navigation
+
+### **Stewardship Companion** (`/donations`)
+- **4-Step Flow:** Guided donation engagement process
+  1. **Donor Information:** Capture donor details and preferences
+  2. **Thank You Generation:** AI-powered personalized gratitude messages
+  3. **Impact Stories:** Share ministry achievements and transformations
+  4. **Follow-up Planning:** Schedule recurring giving and stewardship
+- **Message Preview:** Real-time preview of generated content
+- **Scripture Integration:** Biblical stewardship principles
+- **Donor Segmentation:** Tailored messaging by donor type
+
+### **Impact Dashboard** (`/analytics`)
+- **Ministry Metrics:** Comprehensive analytics and insights
+- **Interaction Tracking:** Monitor AI system performance
+- **Engagement Analytics:** Donor and member engagement patterns
+- **Growth Indicators:** Ministry effectiveness measurements
+- **Custom Reports:** Exportable data and visualizations
+
+---
+
+## 🎨 **Frontend Features & Design**
+
+### **Design System**
+- **Ministry Branding:** Navy (#0A1F44) and Gold (#D4AF37) color palette
+- **Typography:** Playfair Display for headings, Inter for body text
+- **Responsive Design:** Mobile-first approach with breakpoint optimization
+- **Accessibility:** WCAG 2.1 compliant with proper ARIA labels
+- **Dark Mode Ready:** Prepared for future dark theme implementation
+
+### **Interactive Elements**
+- **Framer Motion Animations:** Smooth page transitions and micro-interactions
+- **Loading States:** Skeleton screens and progress indicators
+- **Real-time Updates:** Live chat and notification systems
+- **Touch Optimization:** Mobile-friendly gestures and interactions
+- **Keyboard Navigation:** Full keyboard accessibility support
+
+### **Component Architecture**
+- **Modular Design:** Reusable components with TypeScript interfaces
+- **State Management:** SWR for data fetching and caching
+- **Error Boundaries:** Graceful error handling and recovery
+- **Performance Optimization:** Code splitting and lazy loading
+- **SEO Optimization:** Meta tags and structured data
+
+---
+
+## 🔧 **Development Workflow**
+
+### **Frontend Development Commands**
+
+```bash
+# Navigate to frontend directory
+cd ministry-ai-hub-frontend
+
+# Development server (with hot reload)
+npm run dev
+
+# Production build
+npm run build
+
+# Start production server
+npm run start
+
+# Lint code
+npm run lint
+
+# Type checking
+npx tsc --noEmit
+```
+
+### **Backend Development Commands**
+
+```bash
+# Activate virtual environment
+source ministry_env/bin/activate
+
+# Start development server
+python ministry_hub_main.py
+
+# Run tests
+python -m pytest
+
+# Check code formatting
+black . --check
+
+# Install new dependencies
+pip install package_name
+pip freeze > requirements.txt
+```
+
+### **Full Stack Development**
+
+**Terminal 1 - Backend:**
+```bash
+source ministry_env/bin/activate
+python ministry_hub_main.py
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd ministry-ai-hub-frontend
+npm run dev
+```
+
+**Terminal 3 - Redis (if local):**
+```bash
+redis-server
+```
+
+---
+
+## 🧪 **Testing the Complete System**
+
+### **Frontend Testing**
+
+**1. Dashboard Navigation:**
+- Visit http://localhost:3000
+- Verify all module cards are clickable
+- Check responsive design on different screen sizes
+
+**2. Chat Interface:**
+- Navigate to `/chat`
+- Test message sending and receiving
+- Verify conversation list functionality
+- Check mobile sidebar behavior
+
+**3. Sermon Management:**
+- Go to `/summaries`
+- Test card expansion and transcript viewing
+- Verify download and share buttons
+- Check search and filtering
+
+**4. Donation Flow:**
+- Access `/donations`
+- Complete the 4-step donation process
+- Verify message generation and preview
+- Test form validation and navigation
+
+### **Backend API Testing**
+
+**1. Health Check:**
+```bash
+curl http://localhost:8000/health
+```
+
+**2. Chat Processing:**
 ```bash
 curl -X POST http://localhost:8000/api/v1/inbound/process \
   -H "Content-Type: application/json" \
@@ -339,56 +500,8 @@ curl -X POST http://localhost:8000/api/v1/inbound/process \
   }'
 ```
 
-**2. Escalation Detection Test:**
+**3. Donation Thank You:**
 ```bash
-curl -X POST http://localhost:8000/api/v1/inbound/process \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "I am feeling very depressed and having dark thoughts",
-    "user_id": "test_user_002",
-    "source": "email",
-    "language": "en"
-  }'
-```
-
-**3. Multilingual Translation Test:**
-```bash
-curl -X POST http://localhost:8000/api/v1/inbound/translate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "I need prayer for healing",
-    "target_language": "es"
-  }'
-```
-
-**4. Prayer Request Routing:**
-```bash
-curl -X POST http://localhost:8000/api/v1/inbound/prayer \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "Please pray for my healing from cancer",
-    "user_id": "prayer_user_001",
-    "urgency": "high",
-    "contact_info": "john@example.com"
-  }'
-```
-
-**5. FAQ Lookup Test:**
-```bash
-curl -X POST http://localhost:8000/api/v1/inbound/faq \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "What are your service times?",
-    "user_id": "faq_user_001",
-    "language": "en"
-  }'
-```
-
-### **Donation Engagement Tests**
-
-**1. Thank-You Message Generation:**
-```bash
-# First-time donor
 curl -X POST http://localhost:8000/api/v1/donation/thank-you \
   -H "Content-Type: application/json" \
   -d '{
@@ -397,351 +510,202 @@ curl -X POST http://localhost:8000/api/v1/donation/thank-you \
     "email": "sarah.johnson@email.com",
     "donation_type": "first_time"
   }'
-
-# Major gift donor
-curl -X POST http://localhost:8000/api/v1/donation/thank-you \
-  -H "Content-Type: application/json" \
-  -d '{
-    "donor_name": "Robert and Mary Williams",
-    "amount": "$2,500",
-    "email": "rwilliams@email.com",
-    "donation_type": "major_gift"
-  }'
 ```
 
-**2. Impact Story Generation:**
-```bash
-# Youth ministry impact
-curl -X POST http://localhost:8000/api/v1/donation/impact-story \
-  -H "Content-Type: application/json" \
-  -d '{
-    "category": "youth",
-    "donor_segment": "regular_donor"
-  }'
+### **Integration Testing**
 
-# Missions impact
-curl -X POST http://localhost:8000/api/v1/donation/impact-story \
-  -H "Content-Type: application/json" \
-  -d '{
-    "category": "missions",
-    "donor_segment": "major_donor"
-  }'
-```
+**1. Frontend-Backend Communication:**
+- Ensure frontend can reach backend APIs
+- Verify CORS configuration allows requests
+- Test error handling for failed API calls
 
-**3. Recurring Giving Promotion:**
-```bash
-curl -X POST http://localhost:8000/api/v1/donation/recurring \
-  -H "Content-Type: application/json" \
-  -d '{
-    "donor_name": "Michael Thompson",
-    "current_amount": "$75",
-    "suggested_frequency": "monthly",
-    "donor_history": "6_months"
-  }'
-```
-
-**4. Donation Q&A:**
-```bash
-# Tax deductibility
-curl -X POST http://localhost:8000/api/v1/donation/qa \
-  -H "Content-Type: application/json" \
-  -d '{
-    "question": "Is my donation tax deductible?",
-    "donor_context": "first_time_donor"
-  }'
-
-# Giving methods
-curl -X POST http://localhost:8000/api/v1/donation/qa \
-  -H "Content-Type: application/json" \
-  -d '{
-    "question": "What are the different ways I can give?",
-    "donor_context": "regular_donor"
-  }'
-
-# Planned giving
-curl -X POST http://localhost:8000/api/v1/donation/qa \
-  -H "Content-Type: application/json" \
-  -d '{
-    "question": "How can I include the ministry in my will?",
-    "donor_context": "major_donor"
-  }'
-```
-
-### **Automated Testing Script**
-
-Create comprehensive test script:
-
-```bash
-# Make test script executable
-chmod +x test_all_endpoints.sh
-
-# Run all tests
-./test_all_endpoints.sh
-```
-
----
-
-## 📊 **Interactive API Documentation**
-
-Access comprehensive API documentation with live testing:
-
-- **Swagger UI:** http://localhost:8000/docs
-  - ✅ Interactive endpoint testing
-  - ✅ Request/response schemas
-  - ✅ Parameter documentation
-  - ✅ Authentication testing
-
-- **ReDoc:** http://localhost:8000/redoc
-  - ✅ Clean, readable documentation
-  - ✅ Code examples
-  - ✅ Schema exploration
-
-**Key API Features:**
-- **Authentication:** Bearer token support
-- **Rate Limiting:** Built-in request throttling
-- **Error Handling:** Comprehensive error responses
-- **Validation:** Automatic request validation
-- **Logging:** Full request/response logging
-
----
-
-## 🌍 **Multilingual Support**
-
-| Language | Code | Status | Test Command |
-|----------|------|--------|--------------|
-| English | `en` | ✅ Primary | `"language": "en"` |
-| Spanish | `es` | ✅ Supported | `"language": "es"` |
-| French | `fr` | ✅ Supported | `"language": "fr"` |
-| Portuguese | `pt` | ✅ Supported | `"language": "pt"` |
-| German | `de` | ✅ Supported | `"language": "de"` |
-
-**Translation Test:**
-```bash
-curl -X POST http://localhost:8000/api/v1/inbound/translate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "God bless you and your family",
-    "target_language": "es"
-  }'
-```
+**2. Real-time Features:**
+- Test chat message flow from frontend to backend
+- Verify AI responses appear in frontend chat
+- Check loading states and error messages
 
 ---
 
 ## 🔧 **Troubleshooting Guide**
 
-### **Common Issues & Solutions**
+### **Frontend Issues**
 
-**1. "LM Studio connection failed"**
+**1. "npm install fails"**
+```bash
+# Clear npm cache
+npm cache clean --force
+
+# Delete node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install
+
+# Try different package manager
+yarn install
+# or
+pnpm install
+```
+
+**2. "Port 3000 already in use"**
+```bash
+# Find process using port 3000
+lsof -ti:3000  # Linux/macOS
+netstat -ano | findstr :3000  # Windows
+
+# Kill existing process
+kill -9 $(lsof -ti:3000)  # Linux/macOS
+
+# Use different port
+npm run dev -- --port 3001
+```
+
+**3. "TypeScript errors"**
+```bash
+# Check TypeScript configuration
+npx tsc --noEmit
+
+# Update TypeScript and types
+npm update typescript @types/react @types/node
+
+# Clear Next.js cache
+rm -rf .next
+npm run dev
+```
+
+### **Backend Issues**
+
+**4. "LM Studio connection failed"**
 ```bash
 # Check LM Studio status
 curl http://localhost:1234/v1/models
 
-# Verify LM Studio is running
-ps aux | grep lmstudio  # Linux/macOS
-tasklist | findstr lmstudio  # Windows
+# Update CORS origins in .env
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8000
 
-# Update IP address in .env if needed
-LM_STUDIO_API_BASE=http://YOUR_IP:1234/v1
+# Restart backend server
+python ministry_hub_main.py
 ```
 
-**2. "Redis connection failed"**
+**5. "Frontend can't reach backend"**
 ```bash
-# Check Redis status
-redis-cli ping
-
-# Start Redis if not running
-redis-server  # Local installation
-docker start ministry-redis  # Docker installation
-
-# Check Redis logs
-redis-cli monitor
-```
-
-**3. "Port 8000 already in use"**
-```bash
-# Find process using port 8000
-lsof -ti:8000  # Linux/macOS
-netstat -ano | findstr :8000  # Windows
-
-# Kill existing process
-kill -9 $(lsof -ti:8000)  # Linux/macOS
-
-# Use different port
-python ministry_hub_main.py --port 8001
-```
-
-**4. "Module not found errors"**
-```bash
-# Ensure virtual environment is active
-source ministry_env/bin/activate  # Linux/macOS
-ministry_env\Scripts\activate     # Windows
-
-# Reinstall dependencies
-pip install --upgrade pip
-pip install -r requirements.txt
-
-# Check Python path
-python -c "import sys; print(sys.path)"
-```
-
-**5. "FAQ/Impact data not found"**
-```bash
-# Ensure data directory exists
-mkdir -p data
-
-# Recreate data files (see Step 6 above)
-# Or check file permissions
-ls -la data/
-chmod 644 data/*.json
-```
-
-**6. "AI Agent timeout errors"**
-```bash
-# Check LM Studio model is loaded
-curl http://localhost:1234/v1/models
-
-# Verify model name in .env matches LM Studio
-LM_STUDIO_MODEL=openai/qwen3-4b:2
-
-# Increase timeout in agent configuration
-# Edit agents/*/agents.py files
-```
-
-### **Performance Optimization**
-
-**1. Reduce Response Times:**
-- Use smaller AI models for faster responses
-- Enable Redis caching for FAQ responses
-- Implement response caching for common queries
-
-**2. Scale for Production:**
-- Use multiple LM Studio instances
-- Implement load balancing
-- Add database for persistent storage
-
-**3. Monitor System Health:**
-```bash
-# Check system resources
-htop  # Linux/macOS
-taskmgr  # Windows
-
-# Monitor API performance
+# Verify backend is running
 curl http://localhost:8000/health
-curl http://localhost:8000/metrics  # If enabled
+
+# Check CORS configuration in ministry_hub_main.py
+# Ensure allow_origins includes frontend URL
+
+# Test direct API call
+curl -X GET http://localhost:8000/api/v1/inbound/health
 ```
 
----
+### **Integration Issues**
 
-## 🎯 **Key Features & Capabilities**
+**6. "API calls failing from frontend"**
+- Check browser console for CORS errors
+- Verify API endpoints match between frontend and backend
+- Ensure both servers are running on correct ports
+- Test API endpoints directly with curl first
 
-### **Inbound Communications**
-- ✅ **Smart Agent Routing** - Messages routed to appropriate agents for efficiency
-- ✅ **Escalation Detection** - AI identifies sensitive topics requiring human intervention
-- ✅ **Scripture Integration** - Contextual biblical guidance with every response
-- ✅ **Multilingual Support** - Processes and responds in 5 languages
-- ✅ **Prayer Routing** - Intelligent prayer request categorization and routing
-- ✅ **FAQ Enhancement** - Personalizes standard answers with pastoral tone
-- ✅ **Dr. Myles Voice** - Maintains authentic pastoral communication style
-- ✅ **Safety First** - Comprehensive content filtering and escalation protocols
-
-### **Donation Engagement**
-- ✅ **Personalized Thank-You** - Scripture-based gratitude with donor recognition
-- ✅ **Impact Stories** - Compelling ministry achievement narratives by category
-- ✅ **Stewardship Promotion** - Biblical giving encouragement and education
-- ✅ **Donation Q&A** - Comprehensive giving information and tax guidance
-- ✅ **Recurring Giving** - Intelligent promotion of sustainable giving patterns
-- ✅ **Donor Segmentation** - Tailored messaging based on giving history
-
-### **System Features**
-- ✅ **Real-time Processing** - Sub-10 second response times with smart routing
-- ✅ **Analytics Logging** - Comprehensive interaction tracking and metrics
-- ✅ **Modular Architecture** - Easy maintenance, testing, and feature expansion
-- ✅ **API-First Design** - RESTful APIs for seamless integration
-- ✅ **Production Ready** - Error handling, logging, monitoring, and scaling support
-- ✅ **Security Focused** - Input validation, rate limiting, and secure configurations
-
----
-
-## 🚀 **Production Deployment**
-
-### **Environment Setup**
+**7. "Styling issues"**
 ```bash
-# Production environment variables
-ENVIRONMENT=production
-LOG_LEVEL=WARNING
-ENABLE_ANALYTICS=true
-REDIS_PASSWORD=your-secure-redis-password
-SECRET_KEY=your-production-secret-key
+# Rebuild Tailwind CSS
+cd ministry-ai-hub-frontend
+npm run build
+
+# Clear browser cache
+# Hard refresh (Ctrl+Shift+R or Cmd+Shift+R)
+
+# Check Tailwind configuration
+npx tailwindcss --help
 ```
-
-### **Docker Deployment**
-```dockerfile
-# Dockerfile example
-FROM python:3.11-slim
-
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY . .
-EXPOSE 8000
-
-CMD ["python", "ministry_hub_main.py"]
-```
-
-### **Monitoring & Logging**
-- **Health Checks:** `/health`, `/status` endpoints
-- **Metrics:** Request counts, response times, error rates
-- **Logging:** Structured JSON logs with correlation IDs
-- **Alerts:** Integration with monitoring systems
 
 ---
 
 ## 📈 **Next Steps & Roadmap**
 
 ### **Immediate Actions**
-1. **📋 Explore API Documentation** - http://localhost:8000/docs
-2. **🧪 Test All Endpoints** - Run comprehensive test suite
-3. **⚙️ Configure Ministry Data** - Customize FAQ and impact stories
-4. **🔗 Integrate Systems** - Connect to existing ministry platforms
-5. **📊 Monitor Analytics** - Review interaction logs and metrics
+1. **🎨 Explore Frontend Interface** - http://localhost:3000
+2. **📋 Test API Integration** - Verify frontend-backend communication
+3. **🧪 Complete User Flows** - Test all four main modules end-to-end
+4. **⚙️ Customize Ministry Data** - Update branding, content, and configurations
+5. **🔗 Connect Real Data** - Replace mock data with live API connections
+6. **📊 Monitor Performance** - Check both frontend and backend metrics
 
-### **Future Enhancements**
-- **📱 Mobile App Integration** - React Native/Flutter support
-- **🎤 Voice Integration** - Speech-to-text and text-to-speech
+### **Frontend Enhancements**
+- **🔐 Authentication System** - User login and role-based access
+- **🌙 Dark Mode** - Complete dark theme implementation
+- **📱 PWA Features** - Offline support and mobile app capabilities
+- **🔔 Real-time Notifications** - WebSocket integration for live updates
+- **📊 Advanced Analytics** - Interactive charts and data visualizations
+- **🎤 Voice Integration** - Speech-to-text for chat interface
+
+### **Backend Integrations**
+- **💾 Database Integration** - PostgreSQL/MongoDB for data persistence
 - **📧 Email Integration** - Direct email processing and responses
 - **📅 Calendar Integration** - Appointment scheduling for pastoral care
-- **💾 Database Integration** - PostgreSQL/MongoDB for data persistence
 - **🔐 Advanced Security** - OAuth2, JWT tokens, role-based access
+- **📱 Mobile API** - Optimized endpoints for mobile applications
 
 ---
 
 ## 💡 **Support & Resources**
 
 ### **Documentation & Help**
-- **📖 API Documentation:** http://localhost:8000/docs
+- **🎨 Frontend Interface:** http://localhost:3000
+- **📖 Backend API Documentation:** http://localhost:8000/docs
 - **🔧 Configuration Guide:** See environment variables section above
-- **🧪 Testing Guide:** See API testing section above
+- **🧪 Testing Guide:** See testing sections above
 - **🐛 Issue Reporting:** [GitHub Issues](https://github.com/Sage-Nwanne/inbound_ministry_clean/issues)
 - **💬 Community:** [GitHub Discussions](https://github.com/Sage-Nwanne/inbound_ministry_clean/discussions)
 
-### **Technical Support**
-- **📧 Email Support:** Contact your system administrator
-- **📱 Emergency Contact:** For production issues
-- **🎓 Training:** Available for ministry staff
-- **🔄 Updates:** Regular feature updates and security patches
-
-### **Contributing**
-- **🤝 Contributions Welcome:** Fork, improve, submit PR
-- **📝 Documentation:** Help improve this README
-- **🧪 Testing:** Add test cases and scenarios
-- **🐛 Bug Reports:** Detailed issue reports appreciated
+### **Development Resources**
+- **Next.js Documentation:** https://nextjs.org/docs
+- **React Documentation:** https://react.dev
+- **TypeScript Handbook:** https://typescriptlang.org/docs
+- **Tailwind CSS:** https://tailwindcss.com/docs
+- **Framer Motion:** https://framer.com/motion
+- **FastAPI Documentation:** https://fastapi.tiangolo.com
 
 ---
 
-**Version:** 2.1.0 | **Framework:** Swarms AI + FastAPI + LiteLLM | **Status:** Production Ready
+## 📋 **Quick Reference**
 
-*Empowering ministry through intelligent automation while preserving the human touch of pastoral care.*
+### **Essential Commands**
+```bash
+# Start backend
+source ministry_env/bin/activate
+python ministry_hub_main.py
+
+# Start frontend (new terminal)
+cd ministry-ai-hub-frontend
+npm run dev
+
+# Test health
+curl http://localhost:8000/health
+
+# Access frontend
+open http://localhost:3000
+```
+
+### **Key URLs**
+- **Frontend Dashboard:** http://localhost:3000
+- **Backend API:** http://localhost:8000
+- **API Documentation:** http://localhost:8000/docs
+- **Health Check:** http://localhost:8000/health
+- **LM Studio:** http://localhost:1234
+- **Redis:** localhost:6379
+
+### **Important Files**
+- **Backend Configuration:** `.env`
+- **Frontend Package:** `ministry-ai-hub-frontend/package.json`
+- **Main Backend App:** `ministry_hub_main.py`
+- **Main Frontend Page:** `ministry-ai-hub-frontend/src/app/page.tsx`
+- **Tailwind Config:** `ministry-ai-hub-frontend/tailwind.config.ts`
+
+---
+
+**Version:** 3.0.0 | **Stack:** Next.js + React + FastAPI + Swarms AI | **Status:** Full Stack Ready
+
+*Empowering ministry through intelligent automation with a modern, accessible interface while preserving the human touch of pastoral care.*
 
 ---
 
